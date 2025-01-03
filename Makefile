@@ -16,4 +16,4 @@ migratedown:
 sqlc:
 	sqlc generate
 
-.PHONY: postgres createdb
+.PHONY: postgres createdb migrateup migratedown 
