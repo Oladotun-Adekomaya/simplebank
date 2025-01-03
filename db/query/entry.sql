@@ -2,6 +2,11 @@
 SELECT * FROM entries
 WHERE id = $1 LIMIT 1;
 
+-- name: GetEntryByAccount :one
+SELECT * FROM entries
+WHERE account_id = $1 LIMIT 1;
+
+
 -- name: ListEntries :many
 SELECT * FROM entries
 ORDER BY id
@@ -13,13 +18,13 @@ INSERT INTO entries (
   account_id,
   amount
 ) VALUES (
-  $1, $2, $3
+  $1, $2
 )
 RETURNING *;
 
 -- name: UpdateEntry :one
 UPDATE entries
-  SET balance = $2
+  SET amount = $2
 WHERE id = $1
 RETURNING *;
 
