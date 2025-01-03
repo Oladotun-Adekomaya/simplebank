@@ -36,24 +36,6 @@ func (q *Queries) CreateEntry(ctx context.Context, arg CreateEntryParams) (Entry
 	return i, err
 }
 
-const deleteEntry = `-- name: DeleteEntry :one
-DELETE FROM entries
-WHERE id = $1
-RETURNING id, account_id, amount, created_at
-`
-
-func (q *Queries) DeleteEntry(ctx context.Context, id int64) (Entry, error) {
-	row := q.db.QueryRow(ctx, deleteEntry, id)
-	var i Entry
-	err := row.Scan(
-		&i.ID,
-		&i.AccountID,
-		&i.Amount,
-		&i.CreatedAt,
-	)
-	return i, err
-}
-
 const getEntry = `-- name: GetEntry :one
 SELECT id, account_id, amount, created_at FROM entries
 WHERE id = $1 LIMIT 1
@@ -73,72 +55,20 @@ func (q *Queries) GetEntry(ctx context.Context, id int64) (Entry, error) {
 
 const getEntryByAccount = `-- name: GetEntryByAccount :one
 SELECT id, account_id, amount, created_at FROM entries
-WHERE account_id = $1 LIMIT 1
-`
-
-func (q *Queries) GetEntryByAccount(ctx context.Context, accountID int64) (Entry, error) {
-	row := q.db.QueryRow(ctx, getEntryByAccount, accountID)
-	var i Entry
-	err := row.Scan(
-		&i.ID,
-		&i.AccountID,
-		&i.Amount,
-		&i.CreatedAt,
-	)
-	return i, err
-}
-
-const listEntries = `-- name: ListEntries :many
-SELECT id, account_id, amount, created_at FROM entries
+WHERE account_id = $1 
 ORDER BY id
-LIMIT $1
-OFFSET $2
+LIMIT $2
+OFFSET $3
 `
 
-type ListEntriesParams struct {
-	Limit  int64 `json:"limit"`
-	Offset int64 `json:"offset"`
+type GetEntryByAccountParams struct {
+	AccountID int64 `json:"account_id"`
+	Limit     int64 `json:"limit"`
+	Offset    int64 `json:"offset"`
 }
 
-func (q *Queries) ListEntries(ctx context.Context, arg ListEntriesParams) ([]Entry, error) {
-	rows, err := q.db.Query(ctx, listEntries, arg.Limit, arg.Offset)
-	if err != nil {
-		return nil, err
-	}
-	defer rows.Close()
-	var items []Entry
-	for rows.Next() {
-		var i Entry
-		if err := rows.Scan(
-			&i.ID,
-			&i.AccountID,
-			&i.Amount,
-			&i.CreatedAt,
-		); err != nil {
-			return nil, err
-		}
-		items = append(items, i)
-	}
-	if err := rows.Err(); err != nil {
-		return nil, err
-	}
-	return items, nil
-}
-
-const updateEntry = `-- name: UpdateEntry :one
-UPDATE entries
-  SET amount = $2
-WHERE id = $1
-RETURNING id, account_id, amount, created_at
-`
-
-type UpdateEntryParams struct {
-	ID     int64 `json:"id"`
-	Amount int64 `json:"amount"`
-}
-
-func (q *Queries) UpdateEntry(ctx context.Context, arg UpdateEntryParams) (Entry, error) {
-	row := q.db.QueryRow(ctx, updateEntry, arg.ID, arg.Amount)
+func (q *Queries) GetEntryByAccount(ctx context.Context, arg GetEntryByAccountParams) (Entry, error) {
+	row := q.db.QueryRow(ctx, getEntryByAccount, arg.AccountID, arg.Limit, arg.Offset)
 	var i Entry
 	err := row.Scan(
 		&i.ID,
