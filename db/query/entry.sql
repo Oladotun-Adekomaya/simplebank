@@ -4,14 +4,11 @@ WHERE id = $1 LIMIT 1;
 
 -- name: GetEntryByAccount :one
 SELECT * FROM entries
-WHERE account_id = $1 LIMIT 1;
-
-
--- name: ListEntries :many
-SELECT * FROM entries
+WHERE account_id = $1 
 ORDER BY id
-LIMIT $1
-OFFSET $2;
+LIMIT $2
+OFFSET $3;
+
 
 -- name: CreateEntry :one
 INSERT INTO entries (
@@ -22,8 +19,3 @@ INSERT INTO entries (
 )
 RETURNING *;
 
--- name: UpdateEntry :one
-UPDATE entries
-  SET amount = $2
-WHERE id = $1
-RETURNING *;
