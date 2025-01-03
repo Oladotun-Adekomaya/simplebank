@@ -1,13 +1,18 @@
 version: "2"
 sql:
   - engine: "postgresql"
-    queries: "query.sql"
-    schema: "schema.sql"
+    queries: "./db/query/"
+    schema: "./db/migration/"
     gen:
       go:
         package: "tutorial"
-        out: "tutorial"
+        out: "./db/sqlc/"
         sql_package: "pgx/v5"
+    database:
+      uri: postgresql://root:secret@localhost:5432/simple_bank
+
+overrides:
+  go: null
 # version: "2"
 # cloud:
 #     organization: ""
