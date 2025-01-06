@@ -11,7 +11,7 @@ import (
 
 const DATABASE_URL = "postgresql://root:secret@localhost:5432/simple_bank?sslmode=disable"
 
-var testQueries *Queries
+var testQueries = new(Queries)
 
 func TestMain(m *testing.M) {
 	conn, err := pgx.Connect(context.Background(), DATABASE_URL)
