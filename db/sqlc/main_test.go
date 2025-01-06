@@ -2,7 +2,7 @@ package db
 
 import (
 	"context"
-	"fmt"
+	"log"
 	"os"
 	"testing"
 
@@ -17,16 +17,12 @@ func TestMain(m *testing.M) {
 	// urlExample := "postgres://username:password@localhost:5432/database_name"
 	conn, err := pgx.Connect(context.Background(), DATABASE_URL)
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
-		os.Exit(1)
+		log.Fatal("Unable to connect to db:", err)
 	}
-	defer conn.Close(context.Background())
 
-	var name string
-	var weight int64
-	err = conn.QueryRow(context.Background(), "select name, weight from widgets where id=$1", 42).Scan(&name, &weight)
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "QueryRow failed: %v\n", err)
-		os.Exit(1)
-	}
+	testQueries = New(conn)
+
+	os.Exit(m.Run())
+	// defer conn.Close(context.Background())
+
 }
