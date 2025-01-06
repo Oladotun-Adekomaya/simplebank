@@ -14,3 +14,4 @@ Learnt Golang Database Migration using migrate.
 
 6/1/24
 Learnt about postgressql listen/notify
+Learnt how to write tests in golang using both Golangs standard test library and testify

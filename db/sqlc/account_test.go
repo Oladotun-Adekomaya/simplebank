@@ -2,8 +2,9 @@ package db
 
 import (
 	"context"
-	"github.com/stretchr/testify/require"
 	"testing"
+
+	"github.com/stretchr/testify/require"
 )
 
 func TestCreateAccount(t *testing.T) {
@@ -17,6 +18,11 @@ func TestCreateAccount(t *testing.T) {
 	require.NoError(t, err)
 	require.NotEmpty(t, account)
 
-	require.E
+	require.Equal(t, arg.Owner, account.Owner)
+	require.Equal(t, arg.Balance, account.Balance)
+	require.Equal(t, arg.Currency, account.Currency)
+
+	require.NotZero(t, account.ID)
+	require.NotZero(t, account.CreatedAt)
 
 }
