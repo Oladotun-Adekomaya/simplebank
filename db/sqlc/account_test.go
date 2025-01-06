@@ -9,8 +9,8 @@ import (
 
 func TestCreateAccount(t *testing.T) {
 	arg := CreateAccountParams{
-		Owner:    "tom",
-		Balance:  100,
+		Owner:    "frank",
+		Balance:  1050,
 		Currency: "USD",
 	}
 
