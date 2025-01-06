@@ -11,3 +11,6 @@ You run sqlc to generate Go code that presents type-safe interfaces to those que
 You write application code that calls the methods sqlc generated
 
 Learnt Golang Database Migration using migrate.
+
+6/1/24
+Learnt about postgressql listen/notify
