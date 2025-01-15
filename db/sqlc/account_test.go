@@ -11,8 +11,8 @@ import (
 func TestCreateAccount(t *testing.T) {
 	arg := CreateAccountParams{
 		Owner:    util.RandomOwner(),
-		Balance:  1050,
-		Currency: "USD",
+		Balance:  util.RandomMoney(),
+		Currency: util.RandomCurrency(),
 	}
 
 	account, err := testQueries.CreateAccount(context.Background(), arg)
