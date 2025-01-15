@@ -41,3 +41,11 @@ func RandomOwner() string {
 func RandomMoney() int64 {
 	return RandomInt(100, 5000)
 }
+
+// RandomCurrency generates a random currency code
+func RandomCurrency() string {
+	currencies := []string{"USD", "EUR", "NGN"}
+	n := len(currencies)
+
+	return currencies[rand.Intn(n)]
+}
