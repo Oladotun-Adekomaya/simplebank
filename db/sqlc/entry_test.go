@@ -47,3 +47,7 @@ func TestGetEntry(t *testing.T) {
 	require.WithinDuration(t, entry1.CreatedAt.Time, entry2.CreatedAt.Time, time.Second)
 
 }
+
+func TestListEntries(t *testing.T) {
+
+}
