@@ -12,6 +12,9 @@ You write application code that calls the methods sqlc generated
 
 Learnt Golang Database Migration using migrate.
 
-6/1/24
+6/1/25
 Learnt about postgressql listen/notify
 Learnt how to write tests in golang using both Golangs standard test library and testify
+
+15/1/25
+Learnt how to generate random data for tests
