@@ -8,9 +8,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestCreateTransfer(t *testing.T) {
-	account1 := createRandomAccount(t)
-	account2 := createRandomAccount(t)
+func createRandomTransfer(t *testing.T, account1, account2 Account) Transfer {
 
 	arg := CreateTransferParams{
 		FromAccountID: account1.ID,
@@ -28,5 +26,15 @@ func TestCreateTransfer(t *testing.T) {
 
 	require.NotZero(t, transfer.ID)
 	require.NotZero(t, transfer.CreatedAt)
+
+	return transfer
+
+}
+
+func TestCreateTransfer(t *testing.T) {
+	account1 := createRandomAccount(t)
+	account2 := createRandomAccount(t)
+
+	createRandomTransfer(t, account1, account2)
 
 }
