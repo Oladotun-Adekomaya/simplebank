@@ -22,3 +22,4 @@ Learnt how to generate random data for tests
 20/1/25
 Learnt about db transactions.
 Implemented db transactions and used pgx as the db driver
+Learnt about goroutines, concurrency, and parallelism in golang.
