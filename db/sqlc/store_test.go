@@ -14,7 +14,7 @@ func TestTransferTx(t *testing.T) {
 	account2 := createRandomAccount(t)
 
 	// run n concurrent transfer trasactions
-	n := 1
+	n := (1)
 	amount := int64(10)
 
 	errs := make(chan error)
@@ -43,6 +43,8 @@ func TestTransferTx(t *testing.T) {
 		require.NotEmpty(t, result)
 
 		// check transfer
+		existed := make(map[int]bool)
+
 		transfer := result.Transfer
 		require.NotEmpty(t, transfer)
 		require.Equal(t, account1.ID, transfer.FromAccountID)
@@ -93,5 +95,18 @@ func TestTransferTx(t *testing.T) {
 
 		k := int(diff1 / amount)
 		require.True(t, k >= 1 && k <= n)
+		require.NotContains(t, existed, k)
+		existed[k] = true
+
+		// check the final updated balances
+		updatedAccount1, err := testQueries.GetAccount(context.Background(), account1.ID)
+		require.NoError(t, err)
+
+		updatedAccount2, err := testQueries.GetAccount(context.Background(), account2.ID)
+		require.NoError(t, err)
+
+		require.Equal(t, account1.Balance-int64(n)*amount, updatedAccount1.Balance)
+		require.Equal(t, account2.Balance+int64(n)*amount, updatedAccount2.Balance)
 	}
+
 }
