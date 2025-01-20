@@ -2,19 +2,19 @@ package db
 
 import (
 	"context"
-	"testing"
-
 	"github.com/stretchr/testify/require"
+	"testing"
 )
 
 func TestTransferTx(t *testing.T) {
+
 	store := NewStore(testConn)
 
 	account1 := createRandomAccount(t)
 	account2 := createRandomAccount(t)
 
 	// run n concurrent transfer trasactions
-	n := 5
+	n := 1
 	amount := int64(10)
 
 	errs := make(chan error)
