@@ -23,3 +23,7 @@ Learnt how to generate random data for tests
 Learnt about db transactions.
 Implemented db transactions and used pgx as the db driver
 Learnt about goroutines, concurrency, and parallelism in golang.
+Learnt channels, waitgroups, mutex,
+
+Learnt how to handle concurrent db transactions in golang,
+And how to solve the issue of pgx(postgresql db driver) not accepting conccurrent db trasactions for the same connection
