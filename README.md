@@ -18,3 +18,7 @@ Learnt how to write tests in golang using both Golangs standard test library and
 
 15/1/25
 Learnt how to generate random data for tests
+
+20/1/25
+Learnt about db transactions.
+Implemented db transactions and used pgx as the db driver
