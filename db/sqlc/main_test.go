@@ -12,14 +12,16 @@ import (
 const DATABASE_URL = "postgresql://root:secret@localhost:5432/simple_bank?sslmode=disable"
 
 var testQueries = new(Queries)
+var testConn *pgx.Conn
 
 func TestMain(m *testing.M) {
-	conn, err := pgx.Connect(context.Background(), DATABASE_URL)
+	var err error
+	testConn, err = pgx.Connect(context.Background(), DATABASE_URL)
 	if err != nil {
 		log.Fatal("Unable to connect to db:", err)
 	}
 
-	testQueries = New(conn)
+	testQueries = New(testConn)
 
 	os.Exit(m.Run())
 	// defer conn.Close(context.Background())
