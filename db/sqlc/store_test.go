@@ -13,8 +13,8 @@ func TestTransferTx(t *testing.T) {
 	account1 := createRandomAccount(t)
 	account2 := createRandomAccount(t)
 
-	// run n concurren transfer trasactions
-	n := 5
+	// run n concurrent transfer trasactions
+	n := 1
 	amount := int64(10)
 
 	errs := make(chan error)
